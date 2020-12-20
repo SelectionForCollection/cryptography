@@ -1,0 +1,181 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+
+using namespace std;
+
+int CIn(long long min, long long max) {
+	long long a;
+
+	while (!(cin >> a) || (cin.peek() != '\n')) {
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "Явно присутствуют некорректные для данного типа символы. Проверьте корректность." << endl;
+	}
+
+	if (a > max) {
+		cout << "Число выходит за промежуток. По условию a =< " << max << " и а >= " << min << endl;
+		a = CIn(min, max);
+	}
+
+	if (a < min) {
+		cout << "Число выходит за промежуток. По условию a =< " << max << " и а >= " << min << endl;
+		a = CIn(min, max);
+	}
+
+	return a;
+}
+
+int main() {
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+	string str; long long rotation;
+	cout << "Введите строку: "; getline(cin, str);
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] == 'ё') {
+			cout << "Буква 'ё' будет заменена на 'е'" << endl;
+			str[i] = 'е';
+		}
+	}
+	cout << "Введите сдвиг: "; rotation = CIn(INT_MIN, INT_MAX);
+	for (int i = 0; i < str.length(); i++) {
+		if (rotation >= 0) {
+			if (str[i] != ' ') {
+				if ((str[i] >= 'a') && (str[i] <= 'z')) {
+					if (rotation <= 26) {
+						if (str[i] + rotation > 'z') str[i] += (rotation - 26);
+						else str[i] += rotation;
+					}
+					else {
+						rotation -= (26*(rotation/26));
+						if (str[i] + rotation > 'z') str[i] += (rotation - 26);
+						else str[i] += rotation;
+					}
+				}
+				else {
+					if ((str[i] >= 'а') && (str[i] <= 'я')) {
+						if (rotation <= 32) {
+							if (str[i] + rotation > 'я') str[i] += (rotation - 32);
+							else str[i] += rotation;
+						}
+						else {
+							rotation -= (32 * (rotation / 32));
+							if (str[i] + rotation > 'я') str[i] += (rotation - 32);
+							else str[i] += rotation;
+						}
+					}
+					else {
+						if ((str[i] >= 'A') && (str[i] <= 'Z')) {
+							if (rotation <= 26) {
+								if (str[i] + rotation > 'Z') str[i] += (rotation - 26);
+								else str[i] += rotation;
+							}
+							else {
+								rotation -= (26 * (rotation / 26));
+								if (str[i] + rotation > 'Z') str[i] += (rotation - 26);
+								else str[i] += rotation;
+							}
+						}
+						else {
+							if ((str[i] >= 'А') && (str[i] <= 'Я')) {
+								if (rotation <= 32) {
+									if (str[i] + rotation > 'Я') str[i] += (rotation - 32);
+									else str[i] += rotation;
+								}
+								else {
+									rotation -= (32 * (rotation / 32));
+									if (str[i] + rotation > 'Я') str[i] += (rotation - 32);
+									else str[i] += rotation;
+								}
+							}
+							else {
+								if ((str[i] >= '0') && (str[i] <= '9')) {
+									if (rotation <= 10) {
+										if (str[i] + rotation > '9') str[i] += (rotation - 10);
+										else str[i] += rotation;
+									}
+									else {
+										rotation -= (10 * (rotation / 10));
+										if (str[i] + rotation > '9') str[i] += (rotation - 10);
+										else str[i] += rotation;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else i += 0;
+		}
+		else {
+			if (str[i] != ' ') {
+				if ((str[i] >= 'a') && (str[i] <= 'z')) {
+					if (rotation >= -26) {
+						if (str[i] + rotation < 'a') str[i] += (rotation + 26);
+						else str[i] += rotation;
+					}
+					else {
+						rotation -= (26 * (rotation / 26));
+						if (str[i] + rotation < 'a') str[i] += (rotation + 26);
+						else str[i] += rotation;
+					}
+				}
+				else {
+					if ((str[i] >= 'а') && (str[i] <= 'я')) {
+						if (rotation >= -32) {
+							if (str[i] + rotation < 'a') str[i] += (rotation + 32);
+							else str[i] += rotation;
+						}
+						else {
+							rotation -= (32 * (rotation / 32));
+							if (str[i] + rotation < 'а') str[i] += (rotation + 32);
+							else str[i] += rotation;
+						}
+					}
+					else {
+						if ((str[i] >= 'A') && (str[i] <= 'Z')) {
+							if (rotation >= -26) {
+								if (str[i] + rotation < 'A') str[i] += (rotation + 26);
+								else str[i] += rotation;
+							}
+							else {
+								rotation -= (26 * (rotation / 26));
+								if (str[i] + rotation < 'a') str[i] += (rotation + 26);
+								else str[i] += rotation;
+							}
+						}
+						else {
+							if ((str[i] >= 'А') && (str[i] <= 'Я')) {
+								if (rotation >= -32) {
+									if (str[i] + rotation < 'А') str[i] += (rotation + 32);
+									else str[i] += rotation;
+								}
+								else {
+									rotation -= (32 * (rotation / 32));
+									if (str[i] + rotation < 'а') str[i] += (rotation + 32);
+									else str[i] += rotation;
+								}
+							}
+							else {
+								if ((str[i] >= '0') && (str[i] <= '9')) {
+									if (rotation >= -10) {
+										if (str[i] + rotation < '0') str[i] += (rotation + 10);
+										else str[i] += rotation;
+									}
+									else {
+										rotation -= (10 * (rotation / 10));
+										if (str[i] + rotation > '9') str[i] += (rotation - 10);
+										else str[i] += rotation;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else i += 0;
+		}
+	}
+	cout << str;
+	return 0;
+}
